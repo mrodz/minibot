@@ -6,10 +6,12 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class DriveSubsystem extends SubsystemBase {
-    TalonSRX rightMotor = new TalonSRX(60);
-    TalonSRX leftMotor = new TalonSRX(61);
+    private final TalonSRX rightMotor;
+    private final TalonSRX leftMotor;
 
     public DriveSubsystem() {
+        this.rightMotor = new TalonSRX(60);
+        this.leftMotor = new TalonSRX(61);
     }
 
     public void stop() {

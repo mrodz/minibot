@@ -1,14 +1,15 @@
 package frc.robot;
 
-import java.util.function.Supplier;
+import java.util.function.DoubleSupplier;
 import edu.wpi.first.wpilibj2.command.Command;
 
 public class ArcadeDriveCommand extends Command {
     private final DriveSubsystem driveSubsystem;
-    private final Supplier<Double> speedFunction, turnFunction;
+    private final DoubleSupplier speedFunction;
+    private final DoubleSupplier turnFunction;
 
     public ArcadeDriveCommand(DriveSubsystem driveSubsystem,
-            Supplier<Double> speedFunction, Supplier<Double> turnFunction) {
+            DoubleSupplier speedFunction, DoubleSupplier turnFunction) {
         this.speedFunction = speedFunction;
         this.turnFunction = turnFunction;
         this.driveSubsystem = driveSubsystem;
@@ -21,8 +22,8 @@ public class ArcadeDriveCommand extends Command {
     }
 
     public void execute() {
-        double realTimeSpeed = speedFunction.get();
-        double realTimeTurn = turnFunction.get();
+        double realTimeSpeed = speedFunction.getAsDouble();
+        double realTimeTurn = turnFunction.getAsDouble();
 
         double left = realTimeSpeed + realTimeTurn;
         double right = realTimeSpeed - realTimeTurn;
@@ -35,6 +36,10 @@ public class ArcadeDriveCommand extends Command {
         System.out.println("ArcadeDriveCommand ended!");
     }
 
+    /**
+     * Because this command will be bound to the subsystem, it
+     * should never finish.
+     */
     public boolean isFinished() {
         return false;
     }
