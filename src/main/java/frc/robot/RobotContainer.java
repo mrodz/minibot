@@ -26,8 +26,8 @@ public class RobotContainer {
         this.controller = new CommandXboxController(0);
 
         this.driveSubsystem.setDefaultCommand(new ArcadeDriveCommand(driveSubsystem, //
-                () -> this.controller.getRawAxis(4) / getSpeedDivisor(),
-                () -> this.controller.getRawAxis(1)));
+                () -> this.controller.getRawAxis(4) / 3,
+                () -> this.controller.getRawAxis(1) / getSpeedDivisor()));
 
         this.lights.setDefaultCommand(new LightCommand(lights));
     }
