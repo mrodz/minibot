@@ -6,21 +6,39 @@ import edu.wpi.first.wpilibj.util.Color;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+/**
+ * <p>
+ * A {@link SubsystemBase Subsystem} that manages the LED ring
+ * around the base of the robot.
+ */
 public class LightSubsystem extends SubsystemBase {
-    /** Creates a new LimitSwitch. */
     private AddressableLED led = new AddressableLED(9);
     private AddressableLEDBuffer buffer = new AddressableLEDBuffer(56);
 
+    /**
+     * Initialize the subsystem
+     */
     public LightSubsystem() {
-        led.setLength(buffer.getLength());
-        led.setData(buffer);
-        led.start();
+        this.led.setLength(buffer.getLength());
+        this.led.setData(buffer);
+        this.led.start();
     }
 
+    /**
+     * Set the {@link Color} of an LED at an index on the strip
+     * 
+     * @param index the zero-based index into the LED strip
+     * @param color the color to be displayed
+     */
     public void setLED(int index, Color color) {
         this.buffer.setLED(index, color);
     }
 
+    /**
+     * Set the {@link Color} of every LED on the strip
+     * 
+     * @param color the color to be displayed
+     */
     public void setColor(Color color) {
         for (int i = 0; i < buffer.getLength(); i++) {
             this.buffer.setLED(i, color);
@@ -28,31 +46,23 @@ public class LightSubsystem extends SubsystemBase {
         this.update();
     }
 
+    /**
+     * Write the buffer's content to the LED strip via PWM. The buffer is not
+     * cleared.
+     * 
+     * @apiNote This is an expensive operation. Prefer using a buffered write.
+     */
     public void update() {
-        led.setData(buffer);
+        this.led.setData(buffer);
+    }
+
+    /**
+     * Get the numbers of addressable LEDs supported by this {@link SubsystemBase
+     * Subsystem}
+     * 
+     * @return the number of addressable LEDs
+     */
+    public int getBufferLength() {
+        return this.buffer.getLength();
     }
 }
-// package frc.robot;
-
-// import edu.wpi.first.wpilibj.AddressableLED;
-// import edu.wpi.first.wpilibj.AddressableLEDBuffer;
-// import edu.wpi.first.wpilibj.util.Color;
-// import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
-// public class LightSubsystem extends SubsystemBase {
-// public static final int LIGHTS_LENGTH = 56;
-// public static final int HALF_LENGTH = LIGHTS_LENGTH / 2;
-
-// private final AddressableLED led = new AddressableLED(3);
-// private final AddressableLEDBuffer buffer = new AddressableLEDBuffer(56);
-
-// public LightSubsystem() {
-// led.setLength(this.buffer.getLength());
-// led.setData(this.buffer);
-// led.start();
-// }
-
-// public void setLED(int index, Color color) {
-// this.buffer.setLED(index, color);
-// }
-// }
